@@ -4,11 +4,16 @@
 	<meta http-equiv="content-type" content="text/html; charset=windows-1252"/>
 	<title></title>
 	<meta name="generator" content="LibreOffice 5.0.1.2 (Windows)"/>
-	<meta name="created" content="2021-04-10T02:22:14.814000000"/>
-	<meta name="changed" content="2021-04-11T21:05:56.055000000"/>
+	<meta name="created" content="00:00:00"/>
+	<meta name="changed" content="2021-05-14T19:39:07.927000000"/>
+	<meta name="created" content="00:00:00">
+	<meta name="changed" content="2021-05-14T19:32:26.369000000">
+	<meta name="created" content="2021-04-10T02:22:14.814000000">
+	<meta name="changed" content="2021-04-11T21:05:56.055000000">
 	<style type="text/css">
 		@page { margin: 2cm }
 		p { margin-bottom: 0.25cm; line-height: 120% }
+		td p { margin-bottom: 0cm; line-height: 120% }
 		h1 { margin-bottom: 0.21cm }
 		h1.western { font-family: "Liberation Sans", sans-serif; font-size: 18pt }
 		h1.cjk { font-family: "Microsoft YaHei"; font-size: 18pt }
@@ -16,7 +21,6 @@
 		h2.western { font-family: "Liberation Sans", sans-serif; font-size: 16pt }
 		h2.cjk { font-family: "Microsoft YaHei"; font-size: 16pt }
 		h2.ctl { font-family: "Lucida Sans"; font-size: 16pt }
-		td p { margin-bottom: 0cm }
 	</style>
 </head>
 <body lang="en-IE" dir="ltr">
@@ -26,7 +30,7 @@
 <p style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
-<h1 class="western"> 1 Introduction</h1>
+<h1 class="western">1 Introduction</h1>
 <p style="margin-bottom: 0cm; line-height: 100%">The ICIJ data was
 downloaded from the ICIJ web site: 
 </p>
@@ -36,11 +40,11 @@ imported into Neo4j using the import command.</p>
 <p style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
-<h1 class="western"> 2 Transformation</h1>
+<h1 class="western">2 Transformation</h1>
 <p style="margin-bottom: 0cm; line-height: 100%">The Addresses in
 particular ware very disappointing they are just in an address field
 and this is not good for fine grand data analysis. The changes I made
-are listed below.  In brief they were:</p>
+are listed below. In brief they were:</p>
 <p style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
@@ -57,26 +61,26 @@ are listed below.  In brief they were:</p>
 <p style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
-<h2 class="western"> 2.1 Removing CRLF in CSV Files 
+<h2 class="western">2.1 Removing CRLF in CSV Files 
 </h2>
 <p style="margin-bottom: 0cm; line-height: 100%">Carriage Returns
 Line Feeds in the address field caused the Neo4j import to throw
-errors when it came across them.  It was a simple python script to
-remove them and they were all in the address field.  ICIJ could use
+errors when it came across them. It was a simple python script to
+remove them and they were all in the address field. ICIJ could use
 the concept of a location as defined in the People Object Location
-Event (POLE) data model.  The addresses could at least be broken down
+Event (POLE) data model. The addresses could at least be broken down
 into more usable format.</p>
 <p style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
-<h2 class="western"> 2.2 Changing ID Fields to Ensure Uniqueness</h2>
+<h2 class="western">2.2 Changing ID Fields to Ensure Uniqueness</h2>
 <p style="margin-bottom: 0cm; line-height: 100%">After the issue with
 the addresses the ID field for each of the leaks was prepended with a
-two character code and an underscore '_'.  To maintain the
+two character code and an underscore '_'. To maintain the
 relationships the ID field on both ends of the relationships were
-updated using the same naming schema.  For example if a record in the
+updated using the same naming schema. For example if a record in the
 Bahamas Leaks had the ID 000001 it would become bl_000001 and this
-would be replicated in the edge lists.   Below is a list of the
+would be replicated in the edge lists. Below is a list of the
 prepended characters for each of the leaks:</p>
 <p style="margin-bottom: 0cm; line-height: 100%"><br/>
 
@@ -104,15 +108,15 @@ prepended characters for each of the leaks:</p>
 <p style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
-<h2 class="western"> 2.3 New Relationship Created for Duplicate
+<h2 class="western">2.3 New Relationship Created for Duplicate
 Officer and Intermediary in Offshore Leaks Data</h2>
 <p style="margin-bottom: 0cm; line-height: 100%">Before the data
-could be imported it had to be checked for duplicates.  After the
+could be imported it had to be checked for duplicates. After the
 problem with the CRLF I was suspicious that their might be some. The
 prepended string in the ID's prevented a lot of problems however
 there were duplicates in the Offshore Leaks between Intermediaries
-and Officers.   I used a combination of the Linux commands to find
-duplicates.  
+and Officers. I used a combination of the Linux commands to find
+duplicates. 
 </p>
 <p style="margin-bottom: 0cm; line-height: 100%"><br/>
 
@@ -133,27 +137,61 @@ duplicates.
 </p>
 <p style="margin-bottom: 0cm; line-height: 100%">Duplicates were
 found in the Offshore Leaks data between Intermediaries and Officers.
- To fix this problem each duplicate ID in the Intermediaries file was
+To fix this problem each duplicate ID in the Intermediaries file was
 removed and placed in a separate file oli_is_officer.zip the ID was
 appended with the letter 'x' an example of one of these ID's is
-ol_73157x.  
+ol_73157x. 
 </p>
 <p style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
 <p style="margin-bottom: 0cm; line-height: 100%">A relationship was
 then created to map the new officer/intermediary nodes back to their
-original nodes.   The IS_OFFICER_AND_INTERMEDIARY relationships are
-stored in the  oli_is_same_as_olo_edges.zip file.</p>
+original nodes. The IS_OFFICER_AND_INTERMEDIARY relationships are
+stored in the oli_is_same_as_olo_edges.zip file.</p>
 <p style="margin-bottom: 0cm; line-height: 100%"><br/>
 
+</p>
+<h2 class="western">2.4 Search Terms</h2>
+<p style="margin-bottom: 0cm; line-height: 100%">The search terms
+were added to identify if there are common names between the
+different leaks. If this is the case then these terms will act a link
+nodes. It may indicate that the two Entities/Intermediaries/Officers
+are the same thing.</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">There are 1,216,879
+these were derived from all the names of the
+Officers/Entities/Intermediaries/Other nodes from all the leaks. The
+addresses were not used at this point in time. 
 </p>
 <p style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
-<h1 class="western"> 3 File Names Explained</h1>
+<p style="margin-bottom: 0cm; line-height: 100%">An example would be
+if the company &ldquo;Walter White Laundry&rdquo; existed in the
+Panama Papers and the Paradise Papers they may be linked.</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">Another feature of
+these search terms is the collection of unusual characters that are
+found in them. During the investigations into HSBC it was noticed
+that a lot of people were trying to get around sanctions using
+&ldquo;creative&rdquo; spelling of names. 
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">Further work will be
+done on this.</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<h1 class="western">3 File Names Explained</h1>
 <p style="margin-bottom: 0cm; line-height: 100%">The files are broken
-up into headers and data files.  The ICIJ files were broken up into:</p>
+up into headers and data files. The ICIJ files were broken up into:</p>
 <p style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
@@ -168,7 +206,7 @@ up into headers and data files.  The ICIJ files were broken up into:</p>
 <p style="margin-bottom: 0cm; line-height: 100%">Intermediary
 	(all these files end with I.zip)</p>
 	<li/>
-<p style="margin-bottom: 0cm; line-height: 100%">Addresses 
+<p style="margin-bottom: 0cm; line-height: 100%">Addresses
 	(all these files end with A.zip)</p>
 	<li/>
 <p style="margin-bottom: 0cm; line-height: 100%">Other (in the
@@ -184,8 +222,8 @@ up into headers and data files.  The ICIJ files were broken up into:</p>
 
 </p>
 <p style="margin-bottom: 0cm; line-height: 100%">The file names have
-been shortened to make the import command manageable.  For each set
-of leaks there is one file which contains the edges.  
+been shortened to make the import command manageable. For each set of
+leaks there is one file which contains the edges. 
 </p>
 <p style="margin-bottom: 0cm; line-height: 100%"><br/>
 
@@ -222,7 +260,8 @@ of leaks there is one file which contains the edges.
 	</tr>
 	<tr valign="top">
 		<td width="88" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm">
-			<p>bla.zip	</p>
+			<p>bla.zip 
+			</p>
 		</td>
 		<td width="117" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm">
 			<p>H_bla.csv</p>
@@ -264,7 +303,8 @@ of leaks there is one file which contains the edges.
 	</tr>
 	<tr valign="top">
 		<td width="88" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm">
-			<p>blo.zip	</p>
+			<p>blo.zip 
+			</p>
 		</td>
 		<td width="117" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm">
 			<p>H_blo.csv</p>
@@ -279,8 +319,6 @@ of leaks there is one file which contains the edges.
 </table>
 <p style="margin-bottom: 0cm; line-height: 100%"><br/>
 
-</p>
-<p style="margin-bottom: 0cm; line-height: 100%"> 
 </p>
 <table width="496" cellpadding="5" cellspacing="0">
 	<col width="88">
@@ -380,33 +418,11 @@ of leaks there is one file which contains the edges.
 			<p>papoth.zip</p>
 		</td>
 		<td width="135" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0.1cm">
-			<p><br/>
-
-			</p>
-		</td>
-	</tr>
-	<tr valign="top">
-		<td width="88" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm">
-			<p><br/>
-
-			</p>
-		</td>
-		<td width="117" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm">
-			<p><br/>
-
-			</p>
-		</td>
-		<td width="114" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm">
-			<p>H_papoth.csv</p>
-		</td>
-		<td width="135" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0.1cm">
-			<p><br/>
-
+			<p>H_papoth.csv 
 			</p>
 		</td>
 	</tr>
 </table>
-<p style="margin-bottom: 0cm; line-height: 100%">	</p>
 <p style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
@@ -445,7 +461,41 @@ of leaks there is one file which contains the edges.
 <p style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
-<h1 class="western"> 4 Install Instructions</h1>
+<p style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<table width="591" cellpadding="5" cellspacing="0">
+	<col width="285">
+	<col width="285">
+	<tr>
+		<td colspan="2" width="580" valign="top" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0.1cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm">
+			<p><b>Search Terms</b></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="285" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm">
+			<p>st.zip</p>
+		</td>
+		<td width="285" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm">
+			<p>H_st.csv</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="285" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm">
+			<p>st_edg.zip</p>
+		</td>
+		<td width="285" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0cm; padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm">
+			<p>H_st_edg.csv</p>
+		</td>
+	</tr>
+</table>
+<p style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<h1 class="western">4 Install Instructions</h1>
 <p style="margin-bottom: 0cm; line-height: 100%">To create the graph
 do the following (these instructions apply to Neo4j Desktop for
 Windows):</p>
@@ -478,7 +528,33 @@ import.bat file.</p>
 <p style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
-<h1 class="western"> 5 Future Work</h1>
+<p style="margin-bottom: 0cm; line-height: 100%">Interesting Queries</p>
+<p style="margin-bottom: 0cm; line-height: 100%">The search terms are
+interesting as they may be a way to identify records which have been
+involved in more than one leak.</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">This query for
+example returns all the search terms which connect more than two
+nodes.  
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><b>Note:</b> The
+APOC plug-in has to be installed before it can be used.  
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font color="#000000"><font face="&#65535;"><span style="background: #fffffe"><font color="#859900">MATCH</font><font color="#333333">&nbsp;</font><font color="#586e75">(</font><font color="#333333">st</font><font color="#586e75">:</font><font color="#333333">SEARCH_TERM</font><font color="#586e75">)</font></span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font color="#000000"><font face="&#65535;"><span style="background: #fffffe"><font color="#859900">WHERE</font><font color="#333333">&nbsp;apoc</font><font color="#586e75">.</font><font color="#859900">node</font><font color="#586e75">.</font><font color="#333333">degree</font><font color="#586e75">(</font><font color="#333333">st</font><font color="#586e75">,</font><font color="#333333">&nbsp;</font><font color="#b58900">&quot;IS_FOUND_WITH&quot;</font><font color="#586e75">)</font><font color="#333333">&nbsp;</font><font color="#586e75">&gt;</font><font color="#333333">&nbsp;</font><font color="#2aa198">2</font></span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font color="#000000"><font face="&#65535;"><span style="background: #fffffe"><font color="#859900">RETURN</font><font color="#333333">&nbsp;st</font></span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<h1 class="western">5 Future Work</h1>
 <p>There are number of things I am planning to do with this data:</p>
 <p>The FinCEN graph will be added do this data.</p>
 <p>I have a separate WikiLealk graph which I plan to search for any
