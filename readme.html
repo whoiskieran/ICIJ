@@ -34,7 +34,7 @@
 <p style="margin-bottom: 0cm; line-height: 100%">The ICIJ data was
 downloaded from the ICIJ web site: 
 </p>
-<p style="margin-bottom: 0cm; line-height: 100%">There was a lot of
+<p style="margin-bottom: 0cm; line-height: 100%">There was some
 formatting which had to be done to the data before it could be
 imported into Neo4j using the import command.</p>
 <p style="margin-bottom: 0cm; line-height: 100%"><br/>
@@ -42,8 +42,7 @@ imported into Neo4j using the import command.</p>
 </p>
 <h1 class="western">2 Transformation</h1>
 <p style="margin-bottom: 0cm; line-height: 100%">The Addresses in
-particular ware very disappointing they are just in an address field
-and this is not good for fine grand data analysis. The changes I made
+particular had line return characters. The changes I made
 are listed below. In brief they were:</p>
 <p style="margin-bottom: 0cm; line-height: 100%"><br/>
 
@@ -66,10 +65,7 @@ are listed below. In brief they were:</p>
 <p style="margin-bottom: 0cm; line-height: 100%">Carriage Returns
 Line Feeds in the address field caused the Neo4j import to throw
 errors when it came across them. It was a simple python script to
-remove them and they were all in the address field. ICIJ could use
-the concept of a location as defined in the People Object Location
-Event (POLE) data model. The addresses could at least be broken down
-into more usable format.</p>
+remove them and they were all in the address field. </p>
 <p style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
